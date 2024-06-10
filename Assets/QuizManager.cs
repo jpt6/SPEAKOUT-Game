@@ -17,6 +17,8 @@ public class QuizManager : MonoBehaviour
     public TextMeshProUGUI questionText;
     public Button[] answerButtons;
     public TextMeshProUGUI resultText;
+    public Image scoreImage; // Reference to the UI Image component
+    public Sprite[] scoreSprites; // Array of sprites for different score ranges
 
     private string[] predefinedAnswers = { "Never", "Rarely", "Sometimes", "Often", "Always" };
     private int[] answerWeights = { 4, 3, 2, 1, 0 };
@@ -24,6 +26,7 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         DisplayQuestion();
+        UpdateScoreImage();
     }
 
     void DisplayQuestion()
@@ -52,6 +55,7 @@ public class QuizManager : MonoBehaviour
     {
         totalScore += weight;
         currentQuestionIndex++;
+        UpdateScoreImage();
         DisplayQuestion();
     }
 
@@ -64,5 +68,33 @@ public class QuizManager : MonoBehaviour
         }
         resultText.text = "Your total score: " + totalScore.ToString();
         resultText.gameObject.SetActive(true);
+    }
+
+    void UpdateScoreImage()
+    {
+        if (totalScore < 4)
+        {
+            scoreImage.sprite = scoreSprites[0]; // Display the first image
+        }
+        else if (totalScore < 8)
+        {
+            scoreImage.sprite = scoreSprites[1]; // Display the second image
+        }
+        else if (totalScore < 12)
+        {
+            scoreImage.sprite = scoreSprites[2]; // Display the third image
+        }
+        else if (totalScore < 16)
+        {
+            scoreImage.sprite = scoreSprites[3]; // Display the third image
+        }
+        else if (totalScore < 20)
+        {
+            scoreImage.sprite = scoreSprites[4]; // Display the third image
+        }
+        else
+        {
+            scoreImage.sprite = scoreSprites[5]; // Display the fourth image or more
+        }
     }
 }
